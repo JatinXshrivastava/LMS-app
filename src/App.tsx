@@ -1,4 +1,3 @@
-import React from 'react'
 import {Routes, Route, useMatch} from "react-router-dom";
 import { Home } from './pages/student/Home.tsx';
 import { CourseList } from './pages/student/CourseList';
