@@ -2,14 +2,23 @@
 
 Hey there! This is the frontend part of our LMS (Learning Management System) project called Edemy. It's built with React, Vite, and Tailwind CSS. 
 
-We designed the main student pages to look clean and work well on both desktops and mobile phones.
+We designed the main student and educator pages to look clean and work well on both desktops and mobile phones.
 
 ## Features we built:
+
+### Student Module
 * **Home Page:** Has a hero section, search bar, list of partner companies, top courses grid, testimonials, and a custom footer.
 * **Course List:** A page that lets you search and filter through all our available courses. It has a responsive grid and a clear search button.
 * **Course Details:** Shows the full info of a course, pricing (with discounts), a working YouTube video preview modal, and a clean dropdown accordion for the syllabus/chapters.
 * **My Enrollments:** Shows the list of courses you are currently taking, including a visual progress bar (using `rc-progress`) to see how much you completed.
 * **Course Player:** A custom layout with a main YouTube video frame on the left, and a chapter/lecture sidebar on the right. You can select lectures and tick off circular checkboxes to mark them as done, which updates your enrollment progress!
+
+### Educator Module
+* **Educator Layout:** Wraps all educator routes inside a header navigation bar, a responsive sidebar panel, and an footer.
+* **Dashboard Overview:** Displays stats cards (Total Earnings, Enrolled Students count, Total Courses) and a detailed table tracking recent enrollments.
+* **My Courses:** Shows a table listing all courses you've created with price formatting, enrolled student counts, and publication badges.
+* **Students Enrolled:** A full table displaying all students currently taking your courses, including dates.
+* **Add Course Builder:** An interactive, rich course compiler featuring an integrated Quill rich text editor, pricing setups, and a dynamic syllabus constructor to add/delete custom chapters and lectures. When you click "Publish", it injects the new course right into the general listing page!
 
 ## How to run it locally:
 

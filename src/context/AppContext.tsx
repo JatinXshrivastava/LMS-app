@@ -41,6 +41,19 @@ type AppContextType = {
     setCompletedLectures: (value: any) => void;
     toggleLectureCompletion: (courseId: string, lectureId: string) => void;
     getCourseProgress: (course: any) => number;
+
+    // AddCourse Form state
+    courseTitle: string;
+    setCourseTitle: (value: string) => void;
+    courseDescription: string;
+    setCourseDescription: (value: string) => void;
+    coursePrice: string;
+    setCoursePrice: (value: string) => void;
+    courseDiscount: string;
+    setCourseDiscount: (value: string) => void;
+    courseChapters: any[];
+    setCourseChapters: (value: any[]) => void;
+    addNewCourse: (course: any) => void;
 };
 
 export const AppContext = createContext<AppContextType>({
@@ -80,7 +93,19 @@ export const AppContext = createContext<AppContextType>({
     completedLectures: {},
     setCompletedLectures: () => {},
     toggleLectureCompletion: () => {},
-    getCourseProgress: () => 0
+    getCourseProgress: () => 0,
+
+    courseTitle: "",
+    setCourseTitle: () => {},
+    courseDescription: "",
+    setCourseDescription: () => {},
+    coursePrice: "",
+    setCoursePrice: () => {},
+    courseDiscount: "",
+    setCourseDiscount: () => {},
+    courseChapters: [],
+    setCourseChapters: () => {},
+    addNewCourse: () => {}
 });
 
 export const AppContextProvider = (props: any) => {
@@ -107,9 +132,15 @@ export const AppContextProvider = (props: any) => {
     const [enrolledCourses, setEnrolledCourses] = useState<any[]>([]);
     const [activeLecture, setActiveLecture] = useState<any>(null);
     const [completedLectures, setCompletedLectures] = useState<{ [courseId: string]: string[] }>({
-        // Pre-populate some completed lectures for demo
         "605c72efb3f1c2b1f8e4e1a1": ["lecture1"]
     });
+
+    // AddCourse Form state
+    const [courseTitle, setCourseTitle] = useState("");
+    const [courseDescription, setCourseDescription] = useState("");
+    const [coursePrice, setCoursePrice] = useState("");
+    const [courseDiscount, setCourseDiscount] = useState("");
+    const [courseChapters, setCourseChapters] = useState<any[]>([]);
 
     const toggleLectureCompletion = (courseId: string, lectureId: string) => {
         setCompletedLectures(prev => {
@@ -150,10 +181,13 @@ export const AppContextProvider = (props: any) => {
         return (totalRatings / course.courseRatings.length).toFixed(2);
     };
 
+    const addNewCourse = (course: any) => {
+        setAllCourses(prev => [course, ...prev]);
+    };
+
     // Populate enrolled courses when allCourses is loaded
     useEffect(() => {
         if (allCourses.length > 0) {
-            // Assign mock enrolled courses (first 3 courses)
             setEnrolledCourses(allCourses.slice(0, 3));
         }
     }, [allCourses]);
@@ -193,7 +227,19 @@ export const AppContextProvider = (props: any) => {
         completedLectures,
         setCompletedLectures,
         toggleLectureCompletion,
-        getCourseProgress
+        getCourseProgress,
+
+        courseTitle,
+        setCourseTitle,
+        courseDescription,
+        setCourseDescription,
+        coursePrice,
+        setCoursePrice,
+        courseDiscount,
+        setCourseDiscount,
+        courseChapters,
+        setCourseChapters,
+        addNewCourse
     };
 
     useEffect(() => {
