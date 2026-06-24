@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import { CourseCard } from "../../components/student/CourseCard";
@@ -6,11 +6,15 @@ import { Footer } from "../../components/student/Footer";
 import { assets } from "../../assets/assets";
 
 export function CourseList() {
-    const { allCourses } = useContext(AppContext);
+    const { 
+        allCourses, 
+        searchQuery, 
+        setSearchQuery, 
+        filteredCourses, 
+        setFilteredCourses 
+    } = useContext(AppContext);
     const { input } = useParams();
     const navigate = useNavigate();
-    const [searchQuery, setSearchQuery] = useState(input || "");
-    const [filteredCourses, setFilteredCourses] = useState<any[]>([]);
 
     useEffect(() => {
         setSearchQuery(input || "");
