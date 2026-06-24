@@ -31,6 +31,16 @@ type AppContextType = {
     setShowModal: (value: boolean) => void;
     previewVideoUrl: string;
     setPreviewVideoUrl: (value: string) => void;
+
+    // Enrolled Courses & Player states
+    enrolledCourses: any[];
+    setEnrolledCourses: (value: any[]) => void;
+    activeLecture: any;
+    setActiveLecture: (value: any) => void;
+    completedLectures: { [courseId: string]: string[] };
+    setCompletedLectures: (value: any) => void;
+    toggleLectureCompletion: (courseId: string, lectureId: string) => void;
+    getCourseProgress: (course: any) => number;
 };
 
 export const AppContext = createContext<AppContextType>({
@@ -61,7 +71,16 @@ export const AppContext = createContext<AppContextType>({
     showModal: false,
     setShowModal: () => {},
     previewVideoUrl: "",
-    setPreviewVideoUrl: () => {}
+    setPreviewVideoUrl: () => {},
+
+    enrolledCourses: [],
+    setEnrolledCourses: () => {},
+    activeLecture: null,
+    setActiveLecture: () => {},
+    completedLectures: {},
+    setCompletedLectures: () => {},
+    toggleLectureCompletion: () => {},
+    getCourseProgress: () => 0
 });
 
 export const AppContextProvider = (props: any) => {
@@ -84,6 +103,38 @@ export const AppContextProvider = (props: any) => {
     const [showModal, setShowModal] = useState(false);
     const [previewVideoUrl, setPreviewVideoUrl] = useState("");
 
+    // Enrolled Courses & Player state
+    const [enrolledCourses, setEnrolledCourses] = useState<any[]>([]);
+    const [activeLecture, setActiveLecture] = useState<any>(null);
+    const [completedLectures, setCompletedLectures] = useState<{ [courseId: string]: string[] }>({
+        // Pre-populate some completed lectures for demo
+        "605c72efb3f1c2b1f8e4e1a1": ["lecture1"]
+    });
+
+    const toggleLectureCompletion = (courseId: string, lectureId: string) => {
+        setCompletedLectures(prev => {
+            const current = prev[courseId] || [];
+            const updated = current.includes(lectureId)
+                ? current.filter(id => id !== lectureId)
+                : [...current, lectureId];
+            return {
+                ...prev,
+                [courseId]: updated
+            };
+        });
+    };
+
+    const getCourseProgress = (course: any) => {
+        if (!course) return 0;
+        const completed = completedLectures[course._id]?.length || 0;
+        let total = 0;
+        course.courseContent.forEach((chapter: any) => {
+            total += chapter.chapterContent.length;
+        });
+        if (total === 0) return 0;
+        return Math.round((completed / total) * 100);
+    };
+
     const fetchAllCourses = async () => {
         setAllCourses(dummyCourses);
     };
@@ -98,6 +149,14 @@ export const AppContextProvider = (props: any) => {
         });
         return (totalRatings / course.courseRatings.length).toFixed(2);
     };
+
+    // Populate enrolled courses when allCourses is loaded
+    useEffect(() => {
+        if (allCourses.length > 0) {
+            // Assign mock enrolled courses (first 3 courses)
+            setEnrolledCourses(allCourses.slice(0, 3));
+        }
+    }, [allCourses]);
 
     const value: AppContextType = {
         currency,
@@ -125,7 +184,16 @@ export const AppContextProvider = (props: any) => {
         showModal,
         setShowModal,
         previewVideoUrl,
-        setPreviewVideoUrl
+        setPreviewVideoUrl,
+
+        enrolledCourses,
+        setEnrolledCourses,
+        activeLecture,
+        setActiveLecture,
+        completedLectures,
+        setCompletedLectures,
+        toggleLectureCompletion,
+        getCourseProgress
     };
 
     useEffect(() => {

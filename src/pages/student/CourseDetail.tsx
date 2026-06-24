@@ -7,21 +7,21 @@ import { assets } from "../../assets/assets";
 
 export function CourseDetail() {
     const { id } = useParams();
-    const { 
-        allCourses, 
-        calculateRatings, 
+    const {
+        allCourses,
+        calculateRatings,
         currency,
-        courseData, 
+        courseData,
         setCourseData,
-        expandedChapters, 
+        expandedChapters,
         setExpandedChapters,
-        totalLectures, 
+        totalLectures,
         setTotalLectures,
-        totalDuration, 
+        totalDuration,
         setTotalDuration,
-        showModal, 
+        showModal,
         setShowModal,
-        previewVideoUrl, 
+        previewVideoUrl,
         setPreviewVideoUrl
     } = useContext(AppContext);
 
@@ -107,7 +107,7 @@ export function CourseDetail() {
                 <div className="absolute top-0 left-0 w-full h-[460px] md:h-[480px] bg-gradient-to-b from-[#F0FDF4]/30 to-white -z-10 border-b border-gray-100"></div>
 
                 <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-24 py-12 flex flex-col lg:flex-row gap-10 md:gap-12 relative z-10">
-                    
+
                     {/* Left Column (Course Details) */}
                     <div className="w-full lg:w-[65%] text-left">
                         {/* Title & Subtitle */}
@@ -155,7 +155,7 @@ export function CourseDetail() {
                                     return (
                                         <div key={chapter.chapterId} className="border-b border-gray-200 last:border-b-0">
                                             {/* Chapter Accordion Header */}
-                                            <div 
+                                            <div
                                                 onClick={() => toggleChapter(chapter.chapterId)}
                                                 className="flex justify-between items-center px-4 py-4 bg-gray-50 hover:bg-gray-100/50 cursor-pointer select-none transition-colors duration-200"
                                             >
@@ -181,7 +181,7 @@ export function CourseDetail() {
                                                             </div>
                                                             <div className="flex items-center gap-4">
                                                                 {lecture.isPreviewFree && (
-                                                                    <button 
+                                                                    <button
                                                                         onClick={() => {
                                                                             if (lecture.lectureUrl) {
                                                                                 setPreviewVideoUrl(lecture.lectureUrl);
@@ -210,7 +210,7 @@ export function CourseDetail() {
                         {/* Course Description Section */}
                         <div className="mt-12">
                             <h2 className="text-xl md:text-2xl text-gray-800 font-semibold mb-4">Course Description</h2>
-                            <div 
+                            <div
                                 className="text-gray-600 text-sm md:text-base leading-relaxed space-y-4"
                                 dangerouslySetInnerHTML={{ __html: courseData.courseDescription }}
                             ></div>
@@ -220,16 +220,16 @@ export function CourseDetail() {
                     {/* Right Column (Floating Sticky Sidebar Card) */}
                     <div className="w-full lg:w-[35%] lg:sticky lg:top-6 lg:self-start bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden mt-6 lg:mt-0 transition-transform duration-300">
                         {/* Video Thumbnail Area */}
-                        <div 
+                        <div
                             className="relative aspect-video bg-gray-100 cursor-pointer group"
                             onClick={() => {
                                 if (previewVideoUrl) setShowModal(true);
                             }}
                         >
-                            <img 
-                                src={courseData.courseThumbnail} 
-                                alt={courseData.courseTitle} 
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102" 
+                            <img
+                                src={courseData.courseThumbnail}
+                                alt={courseData.courseTitle}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
                             />
                             {/* Play Overlay */}
                             <div className="absolute inset-0 bg-black/25 flex items-center justify-center transition-opacity duration-300 group-hover:bg-black/35">
@@ -320,11 +320,11 @@ export function CourseDetail() {
             {showModal && previewVideoUrl && (
                 <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4" onClick={() => setShowModal(false)}>
                     <div className="relative bg-black rounded-lg overflow-hidden max-w-4xl w-full aspect-video shadow-2xl" onClick={(e) => e.stopPropagation()}>
-                        <iframe 
-                            src={`https://www.youtube.com/embed/${getYouTubeId(previewVideoUrl)}?autoplay=1`} 
-                            title="Course Preview" 
+                        <iframe
+                            src={`https://www.youtube.com/embed/${getYouTubeId(previewVideoUrl)}?autoplay=1`}
+                            title="Course Preview"
                             className="w-full h-full border-none"
-                            allow="autoplay; encrypted-media" 
+                            allow="autoplay; encrypted-media"
                             allowFullScreen
                         ></iframe>
                         <button className="absolute top-4 right-4 text-white hover:text-gray-200 text-3xl font-bold bg-black/40 hover:bg-black/60 rounded-full w-10 h-10 flex items-center justify-center transition-colors cursor-pointer" onClick={() => setShowModal(false)}>
